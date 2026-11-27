@@ -87,4 +87,26 @@ $('#searchBtn').onclick=()=>{const q=prompt('اكتب اسم الفريق للب
 document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('active',x===b));if(b.dataset.nav==='favorites'){day='favorites';render()}else if(b.dataset.nav==='alerts'){toast('إعدادات التنبيهات ستتوفر في المرحلة القادمة')}else{day='today';render()}});
 render();renderTicker();
 </script>
-</body></html>
+<script>
+const GOAL_LIVE_API = {
+  base: "https://www.thesportsdb.com/api/v1/json/123"
+};
+
+async function goalLiveSearchTeam(name) {
+  try {
+    const response = await fetch(
+      `${GOAL_LIVE_API.base}/searchteams.php?t=${encodeURIComponent(name)}`
+    );
+
+    if (!response.ok) throw new Error("فشل الاتصال");
+
+    const data = await response.json();
+    return data.teams || [];
+  } catch (error) {
+    console.error("GOAL LIVE API:", error);
+    return [];
+  }
+}
+
+console.log("GOAL LIVE API connected");
+</script></body></html>
